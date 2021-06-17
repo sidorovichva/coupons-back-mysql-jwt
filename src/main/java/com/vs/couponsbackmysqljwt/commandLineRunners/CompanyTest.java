@@ -21,8 +21,8 @@ public class CompanyTest implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        couponTestOne(adminFacade.getOneCompany(2));
-        couponTestTwo(adminFacade.getOneCompany(1));
+        couponTestOne(adminFacade.getOneCompany(15)); //2
+        couponTestTwo(adminFacade.getOneCompany(5)); //1
     }
 
     private void couponTestOne(Company company) throws Exception {
@@ -73,7 +73,7 @@ public class CompanyTest implements CommandLineRunner {
         catch (CouponRESTExceptionHandler e) {System.out.println(e.getText());}
 
         try {
-            Coupon updatedCoupon = companyFacade.getOneCouponByCompany(company, 3);
+            Coupon updatedCoupon = companyFacade.getOneCouponByCompany(company, 25); //3
             updatedCoupon.setTitle("NewTitle");
             updatedCoupon.setDescription("newDescription");
             updatedCoupon.setStartDate(Date.valueOf("2021-02-07"));
@@ -83,7 +83,7 @@ public class CompanyTest implements CommandLineRunner {
             companyFacade.updateCoupon(company, updatedCoupon);
         } catch (CouponRESTExceptionHandler e) {System.out.println(e.getText());}
 
-        try {companyFacade.deleteCoupon(company, 4);}
+        try {companyFacade.deleteCoupon(company, 35);} //4
         catch (CouponRESTExceptionHandler e) {System.out.println(e.getText());}
 
         try {companyFacade.getCompanyCoupons(company).forEach(System.out::println);}
