@@ -98,9 +98,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         System.out.println("ApplicationSecurityConfig, corsConfigurationSource");
         System.out.println("=========================================================================================");
         CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOriginPatterns(Arrays.asList(
+                "netlify.app/"
+        ));
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
-                "http://localhost:8080"
+                "https://boring-brown-e3f522.netlify.app/"
         ));
 
         //https://stackoverflow.com/questions/40418441/spring-security-cors-filter
