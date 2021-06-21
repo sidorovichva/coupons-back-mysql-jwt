@@ -1,6 +1,8 @@
-package com.vs.couponsbackmysqljwt.security.authentication;
+package com.vs.couponsbackmysqljwt.security;
 
 import com.vs.couponsbackmysqljwt.beans.Company;
+import com.vs.couponsbackmysqljwt.beans.Customer;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,25 +13,31 @@ import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class CompanyAuthentication implements UserDetails {
-
+@Data
+public class UserPrincipal implements UserDetails {
+    private final Customer customer;
     private final Company company;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_COMPANY"));
+        if (this.customer != null) authorities.add(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
+        if (this.company != null) authorities.add(new SimpleGrantedAuthority("ROLE_COMPANY"));
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return this.company.getPassword();
+        if (this.customer != null) return this.customer.getPassword();
+        if (this.company != null) return this.company.getPassword();
+        return null;
     }
 
     @Override
     public String getUsername() {
-        return this.company.getEmail();
+        if (this.customer != null) return this.customer.getEmail();
+        if (this.company != null) return this.company.getEmail();
+        return null;
     }
 
     @Override

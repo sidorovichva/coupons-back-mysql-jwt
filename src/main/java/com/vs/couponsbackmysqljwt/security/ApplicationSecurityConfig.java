@@ -2,9 +2,6 @@ package com.vs.couponsbackmysqljwt.security;
 
 import com.vs.couponsbackmysqljwt.repositories.CompanyRepository;
 import com.vs.couponsbackmysqljwt.repositories.CustomerRepository;
-import com.vs.couponsbackmysqljwt.security.jwt.amigo.JwtTokenVerifier;
-import com.vs.couponsbackmysqljwt.security.jwt.romanian.JwtAuthenticationFilter;
-import com.vs.couponsbackmysqljwt.security.jwt.romanian.UserPrincipalDetailsService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -96,16 +93,20 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         System.out.println("=========================================================================================");
         System.out.println("ApplicationSecurityConfig, corsConfigurationSource");
         System.out.println("=========================================================================================");
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
-                "*",
                 "http://localhost:3000",
                 "http://localhost:8080"
         ));
+
+        //https://stackoverflow.com/questions/40418441/spring-security-cors-filter
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+
         configuration.setAllowedMethods(Arrays.asList("GET","POST"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

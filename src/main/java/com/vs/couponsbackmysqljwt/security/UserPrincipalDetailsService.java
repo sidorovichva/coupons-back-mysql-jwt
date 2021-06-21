@@ -1,9 +1,10 @@
-package com.vs.couponsbackmysqljwt.security.jwt.romanian;
+package com.vs.couponsbackmysqljwt.security;
 
 import com.vs.couponsbackmysqljwt.beans.Company;
 import com.vs.couponsbackmysqljwt.beans.Customer;
 import com.vs.couponsbackmysqljwt.repositories.CompanyRepository;
 import com.vs.couponsbackmysqljwt.repositories.CustomerRepository;
+import com.vs.couponsbackmysqljwt.security.UserPrincipal;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -63,9 +64,9 @@ public class UserPrincipalDetailsService implements UserDetailsService {
             System.out.println("=========================================================================================");
             return userPrincipal;
         }
-        if (email.equals("gg")) {
-            UserDetails newUser = User.withUsername("gg")
-                    .password(passwordEncoder.encode("44"))
+        if (email.equals("admin")) {
+            UserDetails newUser = User.withUsername("admin")
+                    .password(passwordEncoder.encode("a"))
                     .roles(ADMINISTRATOR.toString())
                     .build();
             System.out.println("=========================================================================================");

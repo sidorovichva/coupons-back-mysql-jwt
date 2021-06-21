@@ -1,4 +1,4 @@
-package com.vs.couponsbackmysqljwt.security.jwt.romanian;
+package com.vs.couponsbackmysqljwt.security;
 
 public class JwtProperties {
     public static final String SECRET = "SomeSecretForJWTGeneration99238475iuhfieh787hvho37yf83hf8co37";

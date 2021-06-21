@@ -1,6 +1,6 @@
-package com.vs.couponsbackmysqljwt.security.jwt.amigo;
+package com.vs.couponsbackmysqljwt.security;
 
-import com.vs.couponsbackmysqljwt.security.jwt.romanian.JwtProperties;
+import com.vs.couponsbackmysqljwt.security.JwtProperties;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +27,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         System.out.println("=========================================================================================");
         System.out.println("JwtTokenVerifier, doFilterInternal, beginning");
         System.out.println("=========================================================================================");
-        String authorizationHeader = request.getHeader("Authorization");
+        String authorizationHeader = request.getHeader(JwtProperties.HEADER_STRING);
 
         System.out.println("=========================================================================================");
         System.out.println("JwtTokenVerifier, doFilterInternal, authorizationHeader");

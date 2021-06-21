@@ -1,11 +1,11 @@
-package com.vs.couponsbackmysqljwt.security.jwt.amigo;
+package com.vs.couponsbackmysqljwt.security;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class UsernameAndPasswordAuthenticationRequest {
+public class LoginViewModel {
     private String username;
     private String password;
 }
