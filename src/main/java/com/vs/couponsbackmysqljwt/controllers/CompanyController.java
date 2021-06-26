@@ -19,6 +19,7 @@ public class CompanyController implements CompanyControllerInterface {
     @Override
     @PostMapping
     public ResponseEntity<?> addCompany(@RequestBody Company company) throws Exception{
+        System.out.println("controller: " + company);
         adminFacade.addCompany(company);
         return new ResponseEntity<>(CouponRESTException.COMPANY_ADD.getSuccess(), HttpStatus.OK);
     }

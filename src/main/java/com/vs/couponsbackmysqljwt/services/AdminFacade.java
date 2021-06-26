@@ -30,6 +30,7 @@ public class AdminFacade extends Facade{
 
     @SpecifyException(exception = CouponRESTException.COMPANY_ADD)
     public void addCompany(@ValidEntry Company company) throws Exception {
+        System.out.println("facade: " + company);
         companyRepository.save(company);
     }
 

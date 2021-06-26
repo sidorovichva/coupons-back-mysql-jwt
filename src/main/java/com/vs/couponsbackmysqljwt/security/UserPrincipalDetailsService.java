@@ -7,6 +7,7 @@ import com.vs.couponsbackmysqljwt.repositories.CustomerRepository;
 import com.vs.couponsbackmysqljwt.security.UserPrincipal;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,6 +25,11 @@ public class UserPrincipalDetailsService implements UserDetailsService {
     private final CustomerRepository customerRepository;
     private final CompanyRepository companyRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Value("${admin.username}")
+    private String adminName;
+    @Value("${admin.password}")
+    private String adminPass;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -64,9 +70,9 @@ public class UserPrincipalDetailsService implements UserDetailsService {
             System.out.println("=========================================================================================");
             return userPrincipal;
         }
-        if (email.equals("admin")) {
-            UserDetails newUser = User.withUsername("admin")
-                    .password(passwordEncoder.encode("a"))
+        if (email.equals(adminName)) {
+            UserDetails newUser = User.withUsername(adminName)
+                    .password(passwordEncoder.encode(adminPass))
                     .roles(ADMINISTRATOR.toString())
                     .build();
             System.out.println("=========================================================================================");

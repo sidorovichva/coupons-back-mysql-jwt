@@ -128,25 +128,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 //.signWith(SignatureAlgorithm.HS512, JwtProperties.SECRET)
                 .compact();
 
-        System.out.println("=========================================================================================");
-        System.out.println("JwtAuthenticationFilter, successfulAuthentication, token");
-        System.out.println(token);
-        System.out.println("=========================================================================================");
-
         // Add token in response
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(
-                "{\"" + JwtProperties.HEADER_STRING + "\":\"" + JwtProperties.TOKEN_PREFIX + token + "\"}"
-                //"{\"" + JwtProperties.HEADER_STRING + "\":\"" + token + "\"}"
+                //"{\"" + JwtProperties.HEADER_STRING + "\":\"" + JwtProperties.TOKEN_PREFIX + token + "\"}" +
+                "{\"" + JwtProperties.HEADER_STRING + "\":\"" + JwtProperties.TOKEN_PREFIX + token +
+                        " Username:" + principal.getUsername() +
+                        " Role:" + principal.getAuthorities() + "\"}"
         );
-
-        System.out.println("=========================================================================================");
-        System.out.println("JwtAuthenticationFilter, successfulAuthentication, response");
-        System.out.println(response);
-        System.out.println(response.getHeaderNames());
-        System.out.println(response.getStatus());
-        System.out.println("=========================================================================================");
     }
 }
