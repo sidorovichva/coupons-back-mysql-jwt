@@ -26,10 +26,10 @@ public class UserPrincipalDetailsService implements UserDetailsService {
     private final CompanyRepository companyRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${admin.username}")
-    private String adminName;
-    @Value("${admin.password}")
-    private String adminPass;
+//    @Value("${admin.username}")
+//    private String adminName;
+//    @Value("${admin.password}")
+//    private String adminPass;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -70,9 +70,9 @@ public class UserPrincipalDetailsService implements UserDetailsService {
             System.out.println("=========================================================================================");
             return userPrincipal;
         }
-        if (email.equals(adminName)) {
-            UserDetails newUser = User.withUsername(adminName)
-                    .password(passwordEncoder.encode(adminPass))
+        if (email.equals("admin")) {
+            UserDetails newUser = User.withUsername("admin")
+                    .password(passwordEncoder.encode("a"))
                     .roles(ADMINISTRATOR.toString())
                     .build();
             System.out.println("=========================================================================================");
