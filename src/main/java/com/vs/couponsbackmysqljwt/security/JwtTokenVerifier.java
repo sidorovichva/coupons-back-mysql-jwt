@@ -24,15 +24,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("=========================================================================================");
-        System.out.println("JwtTokenVerifier, doFilterInternal, beginning");
-        System.out.println("=========================================================================================");
         String authorizationHeader = request.getHeader(JwtProperties.HEADER_STRING);
-
-        System.out.println("=========================================================================================");
-        System.out.println("JwtTokenVerifier, doFilterInternal, authorizationHeader");
-        System.out.println(authorizationHeader);
-        System.out.println("=========================================================================================");
 
         //if (Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith("Bearer ")) {
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
@@ -41,11 +33,6 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         }
 
         String token = authorizationHeader.replace("Bearer ", "");
-
-        System.out.println("=========================================================================================");
-        System.out.println("JwtTokenVerifier, doFilterInternal, token");
-        System.out.println(token);
-        System.out.println("=========================================================================================");
 
         try {
             /*Jws<Claims> claimsJws = Jwts.parser()
@@ -68,26 +55,12 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     username, null, simple);
 
-            System.out.println("=========================================================================================");
-            System.out.println("JwtTokenVerifier, doFilterInternal, authentication");
-            System.out.println(authentication.getPrincipal());
-            System.out.println(authentication.getDetails());
-            System.out.println(authentication.getAuthorities());
-            System.out.println(authentication.getCredentials());
-            System.out.println(authentication.isAuthenticated());
-            System.out.println(authentication.getName());
-            System.out.println("=========================================================================================");
-
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (JwtException e) {
             throw new IllegalStateException(String.format("Token %s cannot be trusted", token));
         }
 
         filterChain.doFilter(request, response);
-
-        System.out.println("=========================================================================================");
-        System.out.println("JwtTokenVerifier, doFilterInternal, finish");
-        System.out.println("=========================================================================================");
     }
 }
 

@@ -43,6 +43,7 @@ public enum ExpReason {
     WRONG_INPUT_INT(new StringBuffer("incorrect input, must be an integer")),
 
     //general data related errors
+    TEST_ENTITY(new StringBuffer("you can't delete test entities (id #1)")),
     NOTHING_FOUND(new StringBuffer("no data found")),
     LIST_LENGTH_ERROR(new StringBuffer("list wasn't generated")),
     WRONG_CHOICE(new StringBuffer("no such option available"));

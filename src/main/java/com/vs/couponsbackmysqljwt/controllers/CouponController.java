@@ -28,6 +28,7 @@ public class CouponController implements CouponControllerInterface {
     @PostMapping
     public ResponseEntity<?> addCoupon(Principal principal, @RequestBody Coupon coupon) throws Exception {
         Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
+        coupon.setCompany(company);
         companyFacade.addCoupon(company, coupon);
         return new ResponseEntity<>(CouponRESTException.COUPON_ADD.getSuccess(), HttpStatus.OK);
     }
@@ -36,6 +37,7 @@ public class CouponController implements CouponControllerInterface {
     @PutMapping
     public ResponseEntity<?> updateCoupon(Principal principal, @RequestBody Coupon coupon) throws Exception {
         Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
+        coupon.setCompany(company);
         companyFacade.updateCoupon(company, coupon);
         return new ResponseEntity<>(CouponRESTException.COUPON_UPDATE.getSuccess(), HttpStatus.OK);
     }

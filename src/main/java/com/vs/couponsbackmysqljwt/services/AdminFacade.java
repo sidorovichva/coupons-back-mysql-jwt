@@ -14,6 +14,7 @@ import com.vs.couponsbackmysqljwt.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,10 +28,15 @@ public class AdminFacade extends Facade{
     private final CompanyRepository companyRepository;
     private final CustomerRepository customerRepository;
     private final CategoryRepository categoryRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    private String encrypt(String field) {
+        return passwordEncoder.encode(field);
+    }
 
     @SpecifyException(exception = CouponRESTException.COMPANY_ADD)
     public void addCompany(@ValidEntry Company company) throws Exception {
-        System.out.println("facade: " + company);
+        company.setPassword(encrypt(company.getPassword()));
         companyRepository.save(company);
     }
 
@@ -41,6 +47,8 @@ public class AdminFacade extends Facade{
 
     @SpecifyException(exception = CouponRESTException.COMPANY_DELETE)
     public void deleteCompany(int companyID) throws Exception {
+        if (companyID == 1) throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_DELETE.getFailure(), ExpReason.TEST_ENTITY);
+        System.out.println("============================================================================deleteCompany");
         companyRepository.deleteById(companyID);
     }
 
@@ -58,6 +66,7 @@ public class AdminFacade extends Facade{
 
     @SpecifyException(exception = CouponRESTException.CUSTOMER_ADD)
     public void addCustomer(@ValidEntry Customer customer) throws Exception {
+        customer.setPassword(encrypt(customer.getPassword()));
         customerRepository.save(customer);
     }
 
@@ -68,6 +77,8 @@ public class AdminFacade extends Facade{
 
     @SpecifyException(exception = CouponRESTException.CUSTOMER_DELETE)
     public void deleteCustomer(int customerID) throws Exception {
+        if (customerID == 1) throw new CouponRESTExceptionHandler(CouponRESTException.CUSTOMER_DELETE.getFailure(), ExpReason.TEST_ENTITY);
+        System.out.println("===========================================================================deleteCustomer");
         customerRepository.deleteById(customerID);
     }
 

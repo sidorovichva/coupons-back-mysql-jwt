@@ -38,6 +38,15 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
     List<Coupon> getCustomerCoupons(int customerID);
 
     @Query(value = "SELECT * FROM coupons " +
+            "LEFT JOIN customers_vs_coupons ON ID = COUPON_ID " +
+            "WHERE CUSTOMER_ID != ? " +
+            "UNION " +
+            "SELECT * FROM coupons " +
+            "LEFT JOIN customers_vs_coupons ON ID = COUPON_ID " +
+            "WHERE COUPON_ID IS NULL", nativeQuery = true)
+    List<Coupon> getNotCustomerCoupons(int customerID);
+
+    @Query(value = "SELECT * FROM coupons " +
             "INNER JOIN customers_vs_coupons ON coupons.ID = customers_vs_coupons.COUPON_ID " +
             "INNER JOIN categories ON categories.ID = coupons.CATEGORY_ID " +
             "WHERE categories.ID = ? AND customers_vs_coupons.CUSTOMER_ID = ?", nativeQuery = true)
@@ -48,3 +57,28 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
             "WHERE coupons.PRICE >= ? AND customers_vs_coupons.CUSTOMER_ID = ?", nativeQuery = true)
     List<Coupon> getCustomerCoupons(double price, int customerID);
 }
+
+//    @Query(value = "SELECT * FROM coupons " +
+//            "INNER JOIN customers_vs_coupons ON ID = COUPON_ID " +
+//            "WHERE customers_vs_coupons.CUSTOMER_ID = ?", nativeQuery = true)
+//    List<Coupon> getCustomerCoupons(int customerID);
+//
+//    @Query(value = "SELECT * FROM coupons " +
+//            "LEFT JOIN customers_vs_coupons ON ID = COUPON_ID " +
+//            "WHERE CUSTOMER_ID != ? " +
+//            "UNION " +
+//            "SELECT * FROM coupons " +
+//            "LEFT JOIN customers_vs_coupons ON ID = COUPON_ID " +
+//            "WHERE COUPON_ID IS NULL", nativeQuery = true)
+//    List<Coupon> getNotCustomerCoupons(int customerID);
+//
+//    @Query(value = "SELECT * FROM coupons " +
+//            "INNER JOIN customers_vs_coupons ON coupons.ID = customers_vs_coupons.COUPON_ID " +
+//            "INNER JOIN categories ON categories.ID = coupons.CATEGORY_ID " +
+//            "WHERE categories.ID = ? AND customers_vs_coupons.CUSTOMER_ID = ?", nativeQuery = true)
+//    List<Coupon> getCustomerCoupons(Category category, int customerID);
+//
+//    @Query(value = "SELECT * FROM coupons " +
+//            "INNER JOIN customers_vs_coupons ON ID = COUPON_ID " +
+//            "WHERE coupons.PRICE >= ? AND customers_vs_coupons.CUSTOMER_ID = ?", nativeQuery = true)
+//    List<Coupon> getCustomerCoupons(double price, int customerID);

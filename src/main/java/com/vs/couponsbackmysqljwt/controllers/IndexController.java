@@ -1,5 +1,6 @@
 package com.vs.couponsbackmysqljwt.controllers;
 
+import com.vs.couponsbackmysqljwt.beans.Coupon;
 import com.vs.couponsbackmysqljwt.repositories.CouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping()
@@ -20,7 +22,10 @@ public class IndexController {
 
     @GetMapping()
     public ResponseEntity<?> getCompanyCoupons() throws Exception {
-        return ResponseEntity.ok().body(couponRepository.findAll());
+        List<Coupon> list = couponRepository.findAll();
+        list.forEach(p -> System.out.println(p));
+        return ResponseEntity.ok().body(list);
+        //return ResponseEntity.ok().body(couponRepository.findAll());
     }
 
     /*@GetMapping("/user")

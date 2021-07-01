@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("purchases")
@@ -36,7 +37,16 @@ public class PurchaseController implements PurchaseControllerInterface {
     @GetMapping()
     public ResponseEntity<?> getCustomerCoupons(Principal principal) throws Exception {
         Customer customer = customerFacade.getCustomerRepository().findCustomerByEmail(principal.getName());
-        return ResponseEntity.ok().body(customerFacade.getCustomerCoupons(customer));
+        List<Coupon> list = customerFacade.getCustomerCoupons(customer);
+        list.forEach(p -> System.err.println(p));
+        return ResponseEntity.ok().body(list);
+        //return ResponseEntity.ok().body(customerFacade.getCustomerCoupons(customer));
+    }
+
+    @GetMapping("/not")
+    public ResponseEntity<?> getNotCustomerCoupons(Principal principal) throws Exception {
+        Customer customer = customerFacade.getCustomerRepository().findCustomerByEmail(principal.getName());
+        return ResponseEntity.ok().body(customerFacade.getNotCustomerCoupons(customer));
     }
 
     @Override

@@ -31,10 +31,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         try {
             LoginViewModel credentials = new ObjectMapper().readValue(request.getInputStream(), LoginViewModel.class);
-            System.out.println("=========================================================================================");
-            System.out.println("JwtAuthenticationFilter, attemptAuthentication, try, credentials");
-            System.out.println(credentials.getUsername() + " - " + credentials.getPassword());
-            System.out.println("=========================================================================================");
             //inner token that spring will use to define authentication
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     credentials.getUsername(),
@@ -42,24 +38,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     //new ArrayList<>()
             );
 
-            System.out.println("=========================================================================================");
-            System.out.println("JwtAuthenticationFilter, attemptAuthentication, authenticationToken");
-            System.out.println(authenticationToken);
-            System.out.println(authenticationToken.getCredentials());
-            System.out.println("=========================================================================================");
-
             Authentication auth = authenticationManager.authenticate(authenticationToken);
             //UsernamePasswordAuthenticationToken [Principal=dd, Credentials=[PROTECTED], Authenticated=false, Details=null, Granted Authorities=[]]
             //UsernamePasswordAuthenticationToken [Principal=a, Credentials=[PROTECTED], Authenticated=false, Details=null, Granted Authorities=[]]
-
-            System.out.println("=========================================================================================");
-            System.out.println("JwtAuthenticationFilter, attemptAuthentication, auth");
-            System.out.println("isAuthenticated: " + auth.isAuthenticated());
-            System.out.println("Authorities: " + auth.getAuthorities());
-            System.out.println("Credentials: " + auth.getCredentials());
-            System.out.println("Principal: " + auth.getPrincipal());
-            System.out.println("Details: " + auth.getDetails());
-            System.out.println("=========================================================================================");
 
             return auth;
         } catch (JsonMappingException e) {
@@ -103,11 +84,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        System.out.println("=========================================================================================");
-        System.out.println("JwtAuthenticationFilter, successfulAuthentication");
-        System.out.println(authResult.getName());
-        System.out.println(authResult.getAuthorities());
-        System.out.println("=========================================================================================");
         // Grab principal
         UserDetails principal = (UserDetails) authResult.getPrincipal();
         //UserDetails principal = (UserDetails) authResult.getPrincipal();

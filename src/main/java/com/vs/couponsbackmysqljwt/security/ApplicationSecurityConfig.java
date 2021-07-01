@@ -64,12 +64,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.addFilterAfter(new JwtTokenVerifier(), JwtAuthenticationFilter.class)
                 .addFilterBefore(new JwtTokenVerifier(), JwtAuthenticationFilter.class)
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/login").permitAll()
+                    .antMatchers(HttpMethod.POST, "/login", "/customers").permitAll()
                     .antMatchers(HttpMethod.GET, "/companies").permitAll()
+                    .antMatchers(HttpMethod.GET, "/categories").hasRole(COMPANY.toString())
                     .antMatchers("/", "/index", "/static/**").permitAll() //don't need authentication
                     //.antMatchers("/user").hasAnyRole(CUSTOMER.toString(), COMPANY.toString(), ADMINISTRATOR.toString())
                     .antMatchers("/companies/**", "/categories/**", "/customers/**").hasRole(ADMINISTRATOR.toString())
-                    .antMatchers("/coupons").hasRole(COMPANY.toString())
+                    .antMatchers("/coupons/**").hasRole(COMPANY.toString())
                     .antMatchers("/purchases/**").hasRole(CUSTOMER.toString())
                     .anyRequest()
                     .authenticated();
@@ -103,7 +104,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
 
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

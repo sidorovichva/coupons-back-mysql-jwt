@@ -58,6 +58,11 @@ public class CustomerFacade extends Facade{
     }
 
     @SpecifyException(exception = CouponRESTException.COUPON_GET)
+    public List<Coupon> getNotCustomerCoupons(Customer customer) throws Exception {
+        return couponRepository.getNotCustomerCoupons(customer.getId());
+    }
+
+    @SpecifyException(exception = CouponRESTException.COUPON_GET)
     public List<Coupon> getCustomerCoupons(Customer customer, Category category) throws Exception {
         return couponRepository.getCustomerCoupons(category, customer.getId());
     }
