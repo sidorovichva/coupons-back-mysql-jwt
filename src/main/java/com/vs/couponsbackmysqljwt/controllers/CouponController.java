@@ -45,6 +45,7 @@ public class CouponController implements CouponControllerInterface {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCoupon(Principal principal, @PathVariable int id) throws Exception {
+        System.err.println("delete: " + id);
         Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
         companyFacade.deleteCoupon(company, id);
         return new ResponseEntity<>(CouponRESTException.COUPON_DELETE.getSuccess(), HttpStatus.OK);
