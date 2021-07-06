@@ -42,11 +42,9 @@ public class CompanyFacade extends Facade{
 
     @SpecifyException(exception = CouponRESTException.COUPON_DELETE)
     public void deleteCoupon(Company company, int couponID) throws Exception {
-//        if (couponID == 1) throw new CouponRESTExceptionHandler(CouponRESTException.COUPON_DELETE.getFailure(), ExpReason.TEST_ENTITY);
-//        if (!couponRepository.existsByIdAndCompany(couponID, company))
-//            throw new CouponRESTExceptionHandler(CouponRESTException.COUPON_UPDATE.getFailure(), ExpReason.COUPON_NOT_AVAILABLE);
-//        System.out.println("coupon id: " + couponID);
-        System.out.println("=============================================================================deleteCoupon");
+        if (couponID == 1) throw new CouponRESTExceptionHandler(CouponRESTException.COUPON_DELETE.getFailure(), ExpReason.TEST_ENTITY);
+        if (!couponRepository.existsByIdAndCompany(couponID, company))
+            throw new CouponRESTExceptionHandler(CouponRESTException.COUPON_UPDATE.getFailure(), ExpReason.COUPON_NOT_AVAILABLE);
         this.couponRepository.deleteById(couponID);
     }
 

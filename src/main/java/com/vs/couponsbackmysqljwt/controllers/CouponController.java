@@ -45,9 +45,9 @@ public class CouponController implements CouponControllerInterface {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCoupon(Principal principal, @PathVariable int id) throws Exception {
-        System.err.println("delete: " + id);
-        Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
-        companyFacade.deleteCoupon(company, id);
+        /*Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
+        companyFacade.deleteCoupon(company, id);*/
+        companyFacade.deleteCoupon(user(principal.getName()), id);
         return new ResponseEntity<>(CouponRESTException.COUPON_DELETE.getSuccess(), HttpStatus.OK);
     }
 
@@ -62,15 +62,16 @@ public class CouponController implements CouponControllerInterface {
     @Override
     @GetMapping("/{category}")
     public ResponseEntity<?> getCompanyCoupons(Principal principal, @PathVariable Category category) throws Exception {
-        Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
-        return ResponseEntity.ok().body(companyFacade.getCompanyCoupons(company, category));
+        /*Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
+        return ResponseEntity.ok().body(companyFacade.getCompanyCoupons(company, category));*/
+        return ResponseEntity.ok().body(companyFacade.getCompanyCoupons(user(principal.getName()), category));
     }
 
     @Override
     @GetMapping("/{maxPrice}")
     public ResponseEntity<?> getCompanyCoupons(Principal principal, @PathVariable double maxPrice) throws Exception {
-        Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
-        return ResponseEntity.ok().body(companyFacade.getCompanyCoupons(company, maxPrice));
+        //Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
+        return ResponseEntity.ok().body(companyFacade.getCompanyCoupons(user(principal.getName()), maxPrice));
     }
 
     @Override
@@ -84,7 +85,7 @@ public class CouponController implements CouponControllerInterface {
     @Override
     @GetMapping("/details")
     public ResponseEntity<?> getCompanyDetails(Principal principal) throws Exception {
-        Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
-        return ResponseEntity.ok().body(companyFacade.getCompanyDetails(company));
+        //Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
+        return ResponseEntity.ok().body(companyFacade.getCompanyDetails(user(principal.getName())));
     }
 }

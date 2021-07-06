@@ -43,10 +43,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(userAuthProvider());
-        /*auth.inMemoryAuthentication()
-                .withUser("a")
-                .password(passwordEncoder.encode("a"))
-                .roles(ADMINISTRATOR.toString());*/
     }
 
     @Override
@@ -57,18 +53,15 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf().disable() //use for formBase authentication
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //this state "disables" cookie check. We dont need it to work with JWT
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //this state "disables" cookie check. No need it to work with JWT
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager())) //JWT first filter
-                //.addFilter(new JwtAuthorizationFilter(authenticationManager(), customerRepository, companyRepository))
-                //.addFilterAfter(new JwtTokenVerifier(), JwtAuthenticationFilter.class)
                 .addFilterBefore(new JwtTokenVerifier(), JwtAuthenticationFilter.class)
                 .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/login", "/customers").permitAll()
                     .antMatchers(HttpMethod.GET, "/companies").permitAll()
                     .antMatchers(HttpMethod.GET, "/categories").hasRole(COMPANY.toString())
-                    .antMatchers("/", "/index", "/static/**").permitAll() //don't need authentication
-                    //.antMatchers("/user").hasAnyRole(CUSTOMER.toString(), COMPANY.toString(), ADMINISTRATOR.toString())
+                    .antMatchers("/", "/index", "/static/**").permitAll()
                     .antMatchers("/companies/**", "/categories/**", "/customers/**").hasRole(ADMINISTRATOR.toString())
                     .antMatchers("/coupons/**").hasRole(COMPANY.toString())
                     .antMatchers("/purchases/**").hasRole(CUSTOMER.toString())
@@ -91,9 +84,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOriginPatterns(Arrays.asList(
-//                "netlify.app/"
-//        ));
+        /*configuration.setAllowedOriginPatterns(Arrays.asList(
+                "netlify.app/"
+        ));*/
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
                 "https://boring-brown-e3f522.netlify.app/",

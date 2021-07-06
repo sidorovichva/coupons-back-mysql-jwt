@@ -49,12 +49,12 @@ public class Company {
         this.password = password;
     }
 
-    @JsonIgnore //doesn't let to serialize the field
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
-    @JsonProperty //let to deserialize the field
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

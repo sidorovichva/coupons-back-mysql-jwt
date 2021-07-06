@@ -48,7 +48,6 @@ public class AdminFacade extends Facade{
     @SpecifyException(exception = CouponRESTException.COMPANY_DELETE)
     public void deleteCompany(int companyID) throws Exception {
         if (companyID == 1) throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_DELETE.getFailure(), ExpReason.TEST_ENTITY);
-        System.out.println("============================================================================deleteCompany");
         companyRepository.deleteById(companyID);
     }
 
@@ -78,7 +77,6 @@ public class AdminFacade extends Facade{
     @SpecifyException(exception = CouponRESTException.CUSTOMER_DELETE)
     public void deleteCustomer(int customerID) throws Exception {
         if (customerID == 1) throw new CouponRESTExceptionHandler(CouponRESTException.CUSTOMER_DELETE.getFailure(), ExpReason.TEST_ENTITY);
-        System.out.println("===========================================================================deleteCustomer");
         customerRepository.deleteById(customerID);
     }
 

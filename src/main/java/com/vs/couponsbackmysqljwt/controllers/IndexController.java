@@ -22,10 +22,7 @@ public class IndexController {
 
     @GetMapping()
     public ResponseEntity<?> getCompanyCoupons() throws Exception {
-        List<Coupon> list = couponRepository.findAll();
-        list.forEach(p -> System.out.println(p));
-        return ResponseEntity.ok().body(list);
-        //return ResponseEntity.ok().body(couponRepository.findAll());
+        return ResponseEntity.ok().body(couponRepository.findAll());
     }
 
     /*@GetMapping("/user")

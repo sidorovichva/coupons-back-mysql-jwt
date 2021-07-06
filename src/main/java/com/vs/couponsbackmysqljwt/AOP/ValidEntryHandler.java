@@ -80,8 +80,6 @@ public class ValidEntryHandler extends CustomHandler{
     public void companyValidityToUpdate(Company company) throws CouponRESTExceptionHandler {
         if (!companyRepository.existsById(company.getId()))
             throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_UPDATE.getFailure(), ExpReason.COMPANY_DOESNT_EXIST);
-//        if (companyRepository.existsByNameAndIdNot(company.getName(), company.getId())
-//                && companyRepository.existsByNameAndIdNot(company.getEmail(), company.getId())) {
         if (companyRepository.existsByNameAndIdNot(company.getName(), company.getId())
                 || companyRepository.existsByEmailAndIdNot(company.getEmail(), company.getId())) {
             throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_UPDATE.getFailure(), ExpReason.COMPANY_ALREADY_EXISTS); }

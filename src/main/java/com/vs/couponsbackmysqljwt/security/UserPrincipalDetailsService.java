@@ -22,17 +22,19 @@ import static com.vs.couponsbackmysqljwt.enums.ClientType.CUSTOMER;
 @RequiredArgsConstructor
 @Data
 public class UserPrincipalDetailsService implements UserDetailsService {
+
     private final CustomerRepository customerRepository;
     private final CompanyRepository companyRepository;
     private final PasswordEncoder passwordEncoder;
 
-//    @Value("${admin.username}")
-//    private String adminName;
-//    @Value("${admin.password}")
-//    private String adminPass;
+    @Value("${admin.username}")
+    private String adminName;
+    @Value("${admin.password}")
+    private String adminPass;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         Customer customer = this.customerRepository.findCustomerByEmail(email);
         if (customer != null) {
             //UserPrincipal userPrincipal = new UserPrincipal(customer, null);
@@ -47,9 +49,16 @@ public class UserPrincipalDetailsService implements UserDetailsService {
             UserPrincipal userPrincipal = new UserPrincipal(null, company);
             return userPrincipal;
         }
-        if (email.equals("admin")) {
+        /*if (email.equals("admin")) {
             UserDetails newUser = User.withUsername("admin")
                     .password(passwordEncoder.encode("a"))
+                    .roles(ADMINISTRATOR.toString())
+                    .build();
+            return newUser;
+        }*/
+        if (email.equals(adminName)) {
+            UserDetails newUser = User.withUsername(adminName)
+                    .password(passwordEncoder.encode(adminPass))
                     .roles(ADMINISTRATOR.toString())
                     .build();
             return newUser;

@@ -41,7 +41,6 @@ public class Customer {
     @Column(nullable = false, length = 100, name = "PASSWORD")
     private String password;
 
-    //@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
     private List<Purchase> purchases = new ArrayList<>();

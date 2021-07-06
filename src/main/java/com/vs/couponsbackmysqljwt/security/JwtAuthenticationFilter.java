@@ -22,6 +22,7 @@ import java.sql.Date;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
     private final AuthenticationManager authenticationManager;
 
     //Triggers when we issue POST request to /login
@@ -93,14 +94,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
 //                .sign(Algorithm.HMAC512(JwtProperties.SECRET.getBytes()));
 
-        String key = "dfgdsfgsdfgsdrygsdvee787343u4hf9344785938c4huhseiudfgfhge53535g45grhgceis";
-
         String token = Jwts.builder()
                 .setSubject(authResult.getName())
                 .claim("authorities", authResult.getAuthorities())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
-                .signWith(Keys.hmacShaKeyFor(JwtProperties.SECRET.getBytes()))
+                .signWith(Keys.hmacShaKeyFor(JwtProperties.SECRET.getBytes())) //actual
+                //.signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 //.signWith(SignatureAlgorithm.HS512, JwtProperties.SECRET)
                 .compact();
 
