@@ -75,6 +75,8 @@ public class ValidEntryHandler extends CustomHandler{
             throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_ADD.getFailure(), ExpReason.COMPANY_ALREADY_EXISTS_ID);
         if (companyRepository.existsByNameOrEmail(company.getName(), company.getEmail()))
             throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_ADD.getFailure(), ExpReason.COMPANY_ALREADY_EXISTS);
+        if (company.getName() == "" || company.getEmail() == "" || company.getPassword() == "" )
+            throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_ADD.getFailure(), ExpReason.FIELD_IS_EMPTY);
     }
 
     public void companyValidityToUpdate(Company company) throws CouponRESTExceptionHandler {
@@ -107,6 +109,8 @@ public class ValidEntryHandler extends CustomHandler{
     public void couponValidityToAdd(Company company, Coupon coupon) throws CouponRESTExceptionHandler {
         if (couponRepository.existsByTitleAndCompany(coupon.getTitle(), company))
             throw new CouponRESTExceptionHandler(CouponRESTException.COUPON_ADD.getFailure(), ExpReason.COUPON_ALREADY_EXISTS);
+        if (coupon.getStartDate().before(new Date(System.currentTimeMillis())))
+            throw new CouponRESTExceptionHandler(CouponRESTException.COUPON_ADD.getFailure(), ExpReason.TOO_LATE);
     }
 
     public void couponValidityToUpdate(Company company, Coupon coupon) throws CouponRESTExceptionHandler {
@@ -119,8 +123,6 @@ public class ValidEntryHandler extends CustomHandler{
     public void couponValidity(Company company, Coupon coupon) throws CouponRESTExceptionHandler {
         if (coupon.getAmount() < 1)
             throw new CouponRESTExceptionHandler(CouponRESTException.COUPON_ADD.getFailure(), ExpReason.WRONG_AMOUNT);
-        if (coupon.getStartDate().before(new Date(System.currentTimeMillis())))
-            throw new CouponRESTExceptionHandler(CouponRESTException.COUPON_ADD.getFailure(), ExpReason.TOO_LATE);
         if (coupon.getEndDate().before(new Date(System.currentTimeMillis())))
             throw new CouponRESTExceptionHandler(CouponRESTException.COUPON_ADD.getFailure(), ExpReason.TOO_LATE);
         if (coupon.getEndDate().before(coupon.getStartDate()))

@@ -1,7 +1,9 @@
 package com.vs.couponsbackmysqljwt.controllers;
 
 import com.vs.couponsbackmysqljwt.beans.Coupon;
+import com.vs.couponsbackmysqljwt.repositories.CompanyRepository;
 import com.vs.couponsbackmysqljwt.repositories.CouponRepository;
+import com.vs.couponsbackmysqljwt.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,10 +21,23 @@ import java.util.List;
 public class IndexController {
 
     private final CouponRepository couponRepository;
+    private final CustomerRepository customerRepository;
+    private final CompanyRepository companyRepository;
 
     @GetMapping()
     public ResponseEntity<?> getCompanyCoupons() throws Exception {
         return ResponseEntity.ok().body(couponRepository.findAll());
+    }
+
+    @GetMapping("/user/customer")
+    public ResponseEntity<?> getCustomerUser(Principal principal) throws Exception {
+        return ResponseEntity.ok().body(customerRepository.findCustomerByEmail(principal.getName()));
+    }
+
+    @GetMapping("/user/company")
+    public ResponseEntity<?> getCompanyUser(Principal principal) throws Exception {
+        System.err.println(companyRepository.findCompanyByEmail(principal.getName()));
+        return ResponseEntity.ok().body(companyRepository.findCompanyByEmail(principal.getName()));
     }
 
     /*@GetMapping("/user")

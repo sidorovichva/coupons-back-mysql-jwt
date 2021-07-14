@@ -27,6 +27,7 @@ public class CouponController implements CouponControllerInterface {
     @Override
     @PostMapping
     public ResponseEntity<?> addCoupon(Principal principal, @RequestBody Coupon coupon) throws Exception {
+        System.err.println(coupon);
         Company company = companyFacade.getCompanyRepository().findCompanyByEmail(principal.getName());
         coupon.setCompany(company);
         companyFacade.addCoupon(company, coupon);

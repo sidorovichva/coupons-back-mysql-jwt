@@ -21,6 +21,9 @@ public enum ExpReason {
     CATEGORY_DOESNT_EXIST(new StringBuffer("category doesn't exist")),
     CATEGORIES_WERENT_FOUND(new StringBuffer("no category found")),
 
+    //company creation
+    FIELD_IS_EMPTY(new StringBuffer("all fields must be filled")),
+
     //coupon creation
     WRONG_AMOUNT(new StringBuffer("the amount of coupons must be at least 1")),
     TOO_LATE(new StringBuffer("start or end of promotion period of a new or an updated coupon can't start in the past")),

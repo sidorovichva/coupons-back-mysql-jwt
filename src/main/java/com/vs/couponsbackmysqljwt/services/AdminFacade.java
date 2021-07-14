@@ -42,6 +42,8 @@ public class AdminFacade extends Facade{
 
     @SpecifyException(exception = CouponRESTException.COMPANY_UPDATE)
     public void updateCompany(@ValidEntry Company company) throws Exception {
+        if (company.getPassword() == "") company.setPassword(customerRepository.findById(company.getId()).get().getPassword());
+        else company.setPassword(encrypt(company.getPassword()));
         companyRepository.save(company);
     }
 
@@ -71,6 +73,8 @@ public class AdminFacade extends Facade{
 
     @SpecifyException(exception = CouponRESTException.CUSTOMER_UPDATE)
     public void updateCustomer(@ValidEntry Customer customer) throws Exception {
+        if (customer.getPassword() == "") customer.setPassword(customerRepository.findById(customer.getId()).get().getPassword());
+        else customer.setPassword(encrypt(customer.getPassword()));
         customerRepository.save(customer);
     }
 
