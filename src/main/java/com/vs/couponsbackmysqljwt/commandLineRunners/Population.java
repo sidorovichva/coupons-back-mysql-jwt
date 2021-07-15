@@ -34,12 +34,12 @@ public class Population implements CommandLineRunner {
     }
 
     private void companyTest() throws Exception {
-        try {adminFacade.addCompany(Company.builder().name("TestCompany").email("company").password("com").build());}
+        try {adminFacade.addCompany(Company.builder().name("TestCompany").email("company@com.com").password("com").build());}
         catch (CouponRESTExceptionHandler e) {System.out.println(e.getText());}
     }
 
     private void customerTest() throws Exception {
-        try {adminFacade.addCustomer(Customer.builder().firstName("Test").lastName("Customer").email("customer").password("cus").build());}
+        try {adminFacade.addCustomer(Customer.builder().firstName("Test").lastName("Customer").email("customer@cus.com").password("cus").build());}
         catch (CouponRESTExceptionHandler e) {System.out.println(e.getText());}
     }
 

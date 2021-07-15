@@ -10,6 +10,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +28,9 @@ public class ValidEntryHandler extends CustomHandler{
     private final CategoryRepository categoryRepository;
     private final CouponRepository couponRepository;
     private final PurchaseRepository purchaseRepository;
+
+    @Value("${admin.username}")
+    private String adminName;
 
     @Before("execution(public * *(.., @ValidEntry (*), ..))")
     public void handler(JoinPoint joinPoint) throws Throwable {
@@ -73,6 +77,8 @@ public class ValidEntryHandler extends CustomHandler{
     public void companyValidityToAdd(Company company) throws CouponRESTExceptionHandler {
         if (companyRepository.existsById(company.getId()))
             throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_ADD.getFailure(), ExpReason.COMPANY_ALREADY_EXISTS_ID);
+        if (company.getEmail() == adminName)
+            throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_ADD.getFailure(), ExpReason.COMPANY_ALREADY_EXISTS);
         if (companyRepository.existsByNameOrEmail(company.getName(), company.getEmail()))
             throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_ADD.getFailure(), ExpReason.COMPANY_ALREADY_EXISTS);
         if (company.getName() == "" || company.getEmail() == "" || company.getPassword() == "" )
@@ -82,6 +88,8 @@ public class ValidEntryHandler extends CustomHandler{
     public void companyValidityToUpdate(Company company) throws CouponRESTExceptionHandler {
         if (!companyRepository.existsById(company.getId()))
             throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_UPDATE.getFailure(), ExpReason.COMPANY_DOESNT_EXIST);
+        if (company.getEmail() == adminName)
+            throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_UPDATE.getFailure(), ExpReason.COMPANY_ALREADY_EXISTS);
         if (companyRepository.existsByNameAndIdNot(company.getName(), company.getId())
                 || companyRepository.existsByEmailAndIdNot(company.getEmail(), company.getId())) {
             throw new CouponRESTExceptionHandler(CouponRESTException.COMPANY_UPDATE.getFailure(), ExpReason.COMPANY_ALREADY_EXISTS); }
@@ -90,6 +98,8 @@ public class ValidEntryHandler extends CustomHandler{
     public void customerValidityToAdd(Customer customer) throws CouponRESTExceptionHandler {
         if (customerRepository.existsById(customer.getId()))
             throw new CouponRESTExceptionHandler(CouponRESTException.CUSTOMER_ADD.getFailure(), ExpReason.CUSTOMER_ALREADY_EXISTS_ID);
+        if (customer.getEmail() == adminName)
+            throw new CouponRESTExceptionHandler(CouponRESTException.CUSTOMER_ADD.getFailure(), ExpReason.CUSTOMER_ALREADY_EXISTS);
         if (customerRepository.existsByEmail(customer.getEmail()))
             throw new CouponRESTExceptionHandler(CouponRESTException.CUSTOMER_ADD.getFailure(), ExpReason.CUSTOMER_ALREADY_EXISTS);
     }
@@ -97,6 +107,8 @@ public class ValidEntryHandler extends CustomHandler{
     public void customerValidityToUpdate(Customer customer) throws CouponRESTExceptionHandler {
         if (!customerRepository.existsById(customer.getId()))
             throw new CouponRESTExceptionHandler(CouponRESTException.CUSTOMER_UPDATE.getFailure(), ExpReason.CUSTOMER_DOESNT_EXIST);
+        if (customer.getEmail() == adminName)
+            throw new CouponRESTExceptionHandler(CouponRESTException.CUSTOMER_UPDATE.getFailure(), ExpReason.CUSTOMER_ALREADY_EXISTS);
         if (customerRepository.existsByEmailAndIdNot(customer.getEmail(), customer.getId())) {
             throw new CouponRESTExceptionHandler(CouponRESTException.CUSTOMER_UPDATE.getFailure(), ExpReason.CUSTOMER_ALREADY_EXISTS); }
     }

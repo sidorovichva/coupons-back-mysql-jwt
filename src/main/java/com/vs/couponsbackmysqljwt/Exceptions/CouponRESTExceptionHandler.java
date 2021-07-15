@@ -9,7 +9,7 @@ public class CouponRESTExceptionHandler extends Exception{
     private StringBuffer text;
 
     private final StringBuffer timeStamp = new StringBuffer(new Timestamp(System.currentTimeMillis()).toString());
-    private final StringBuffer space = new StringBuffer("\n");
+    private final StringBuffer space = new StringBuffer(" ");
     private final StringBuffer beginning = new StringBuffer("Reason: ");
 
     public CouponRESTExceptionHandler(StringBuffer exception) {

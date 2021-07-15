@@ -31,6 +31,7 @@ public class PurchaseController implements PurchaseControllerInterface {
     @Override
     @PostMapping
     public ResponseEntity<?> addPurchase(Principal principal, @RequestBody int couponId) throws Exception{
+        System.err.println(couponId + " " + principal.getName());
         //Customer customer = customerFacade.getCustomerRepository().findCustomerByEmail(principal.getName());
         Coupon coupon = customerFacade.getOneCoupon(couponId);
         //customerFacade.purchaseCoupon(customer, coupon);
