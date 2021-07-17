@@ -44,6 +44,7 @@ public class AdminFacade extends Facade{
     public void updateCompany(@ValidEntry Company company) throws Exception {
         if (company.getPassword() == "") company.setPassword(customerRepository.findById(company.getId()).get().getPassword());
         else company.setPassword(encrypt(company.getPassword()));
+        System.err.println(company);
         companyRepository.save(company);
     }
 

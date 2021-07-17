@@ -36,7 +36,7 @@ public class PurchaseController implements PurchaseControllerInterface {
         Coupon coupon = customerFacade.getOneCoupon(couponId);
         //customerFacade.purchaseCoupon(customer, coupon);
         customerFacade.purchaseCoupon(user(principal.getName()), coupon);
-        return new ResponseEntity<>(CouponRESTException.COMPANY_ADD.getSuccess(), HttpStatus.OK);
+        return new ResponseEntity<>(CouponRESTException.PURCHASE_ADD.getSuccess(), HttpStatus.OK);
     }
 
     @Override

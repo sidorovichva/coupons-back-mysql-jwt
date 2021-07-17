@@ -30,7 +30,7 @@ public class Population implements CommandLineRunner {
         customerTest();
         categoryTest();
         couponTestOne(adminFacade.getOneCompany(1));
-        purchaseTestOne(adminFacade.getOneCustomer(1));
+        //purchaseTestOne(adminFacade.getOneCustomer(1));
     }
 
     private void companyTest() throws Exception {
@@ -66,8 +66,8 @@ public class Population implements CommandLineRunner {
         catch (CouponRESTExceptionHandler e) {System.out.println(e.getText());}
     }
 
-    private void purchaseTestOne(Customer customer) throws Exception {
+    /*private void purchaseTestOne(Customer customer) throws Exception {
         try {customerFacade.purchaseCoupon(customer, customerFacade.getOneCoupon(1));}
         catch (CouponRESTExceptionHandler e) {System.out.println(e.getText());}
-    }
+    }*/
 }
