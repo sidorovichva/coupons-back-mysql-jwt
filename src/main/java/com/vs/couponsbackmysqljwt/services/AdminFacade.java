@@ -73,7 +73,7 @@ public class AdminFacade extends Facade{
 
     @SpecifyException(exception = CouponRESTException.CUSTOMER_UPDATE)
     public void updateCustomer(@ValidEntry Customer customer) throws Exception {
-        if (customer.getPassword() == "") customer.setPassword(customerRepository.findById(customer.getId()).get().getPassword());
+        if (customer.getPassword() == "NoNeedToUpdate") customer.setPassword(customerRepository.findById(customer.getId()).get().getPassword());
         else customer.setPassword(encrypt(customer.getPassword()));
         customerRepository.save(customer);
     }
