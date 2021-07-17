@@ -42,9 +42,8 @@ public class AdminFacade extends Facade{
 
     @SpecifyException(exception = CouponRESTException.COMPANY_UPDATE)
     public void updateCompany(@ValidEntry Company company) throws Exception {
-        if (company.getPassword() == "") company.setPassword(customerRepository.findById(company.getId()).get().getPassword());
+        if (company.getPassword() == "NoNeedToUpdate") company.setPassword(customerRepository.findById(company.getId()).get().getPassword());
         else company.setPassword(encrypt(company.getPassword()));
-        System.err.println(company);
         companyRepository.save(company);
     }
 
